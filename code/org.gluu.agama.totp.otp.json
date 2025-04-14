@@ -1,0 +1,399 @@
+{
+	"nodes": [
+		{
+			"data": {
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": "{}",
+					"creationDate": "19/11/2024",
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "userId secretKey qrCodeAlg",
+					"configs": "",
+					"flowname": "org.gluu.agama.totp.otp",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Check OTP flow"
+				},
+				"id": "startNode-62103db5-a3a8-48cd-929f-48073d9ed298",
+				"type": "startNode",
+				"position": {
+					"x": 50,
+					"y": 200
+				}
+			},
+			"type": "startNode",
+			"id": "startNode-62103db5-a3a8-48cd-929f-48073d9ed298",
+			"position": {
+				"x": 50,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "octicon:log-16",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "otp enrollment",
+					"logMessage": "\"otp enrollment for user \" userId secretKey",
+					"logLevel": "debug"
+				},
+				"id": "logNode-ebba8087-752c-4442-b259-3532a0c809d8",
+				"type": "logNode",
+				"position": {
+					"x": 300,
+					"y": 200
+				},
+				"previousNodeId": "startNode-62103db5-a3a8-48cd-929f-48073d9ed298"
+			},
+			"type": "logNode",
+			"id": "logNode-ebba8087-752c-4442-b259-3532a0c809d8",
+			"position": {
+				"x": 300,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "ph:globe-simple",
+					"nodeColor": "#78dcdc",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Load OTP login page",
+					"arguments": [
+						""
+					],
+					"templatePath": "otplogin.ftlh",
+					"asssignedVariableName": "scanCode"
+				},
+				"id": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280",
+				"type": "rrfNode",
+				"position": {
+					"x": 550,
+					"y": 200
+				},
+				"previousNodeId": "logNode-ebba8087-752c-4442-b259-3532a0c809d8"
+			},
+			"type": "rrfNode",
+			"id": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280",
+			"position": {
+				"x": 550,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "octicon:log-16",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Debug Log: Log OTP which is entered by User",
+					"logMessage": "\"scan code : \" scanCode.code",
+					"logLevel": "debug"
+				},
+				"id": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6",
+				"type": "logNode",
+				"position": {
+					"x": 800,
+					"y": 200
+				},
+				"previousNodeId": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280"
+			},
+			"type": "logNode",
+			"id": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6",
+			"position": {
+				"x": 800,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:code",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Get Instance TOTPService",
+					"javaClassName": "org.gluu.agama.totp.TOTPService",
+					"javaMethodName": "getInstance",
+					"javaVariableName": "",
+					"exceptionVariableField": "E",
+					"callType": "Call static method",
+					"arguments": [],
+					"asssignedVariableName": "OTPServiceObj"
+				},
+				"id": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea",
+				"type": "callNode",
+				"position": {
+					"x": 1050,
+					"y": 200
+				},
+				"previousNodeId": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6"
+			},
+			"type": "callNode",
+			"id": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea",
+			"position": {
+				"x": 1050,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:code",
+					"nodeColor": "#a6d9a9",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Call validateTOTP method to check OTP is valid or not",
+					"javaClassName": "org.gluu.agama.totp.TOTPUtil",
+					"javaMethodName": "validateTOTP",
+					"javaVariableName": "OTPServiceObj",
+					"exceptionVariableField": "",
+					"callType": "Call method on instance",
+					"arguments": [
+						"scanCode.code",
+						"secretKey",
+						"qrCodeAlg"
+					],
+					"asssignedVariableName": "otpCheck"
+				},
+				"id": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28",
+				"type": "callNode",
+				"position": {
+					"x": 1300,
+					"y": 200
+				},
+				"previousNodeId": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea"
+			},
+			"type": "callNode",
+			"id": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28",
+			"position": {
+				"x": 1300,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "octicon:log-16",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Debug Log : OTP check result",
+					"logMessage": "\"otp check result \" otpCheck",
+					"logLevel": "debug"
+				},
+				"id": "logNode-943c6de8-1cde-4451-8856-e757589be0af",
+				"type": "logNode",
+				"position": {
+					"x": 1550,
+					"y": 200
+				},
+				"previousNodeId": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28"
+			},
+			"type": "logNode",
+			"id": "logNode-943c6de8-1cde-4451-8856-e757589be0af",
+			"position": {
+				"x": 1550,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"data": {
+				"agamaData": {
+					"nodeIcon": "material-symbols:line-end-square-rounded",
+					"hasComment": true,
+					"comment": "Return OTP Check result",
+					"returnVariable": "otpCheck",
+					"finishMode": "withVariable"
+				},
+				"id": "finishNode-42ae2c00-219e-469c-8d6d-ba73408e9833",
+				"type": "finishNode",
+				"position": {
+					"x": 1800,
+					"y": 200
+				},
+				"previousNodeId": "logNode-943c6de8-1cde-4451-8856-e757589be0af"
+			},
+			"type": "finishNode",
+			"id": "finishNode-42ae2c00-219e-469c-8d6d-ba73408e9833",
+			"position": {
+				"x": 1800,
+				"y": 200
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-62103db5-a3a8-48cd-929f-48073d9ed298-logNode-ebba8087-752c-4442-b259-3532a0c809d8",
+			"type": "default",
+			"source": "startNode-62103db5-a3a8-48cd-929f-48073d9ed298",
+			"target": "logNode-ebba8087-752c-4442-b259-3532a0c809d8",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-62103db5-a3a8-48cd-929f-48073d9ed298"
+		},
+		{
+			"id": "logNode-ebba8087-752c-4442-b259-3532a0c809d8-rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280",
+			"type": "default",
+			"source": "logNode-ebba8087-752c-4442-b259-3532a0c809d8",
+			"target": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-ebba8087-752c-4442-b259-3532a0c809d8"
+		},
+		{
+			"id": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280-logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6",
+			"type": "default",
+			"source": "rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280",
+			"target": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_rrfNode-e0c25dad-14cc-46e4-9de1-61ef90e77280"
+		},
+		{
+			"id": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6-callNode-87deb26e-ed39-48d8-b288-61d22d4feaea",
+			"type": "default",
+			"source": "logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6",
+			"target": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-6a8c5fdf-4fb8-4ed7-a3a5-a8180c127bb6"
+		},
+		{
+			"id": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea-callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28",
+			"type": "default",
+			"source": "callNode-87deb26e-ed39-48d8-b288-61d22d4feaea",
+			"target": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-87deb26e-ed39-48d8-b288-61d22d4feaea"
+		},
+		{
+			"id": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28-logNode-943c6de8-1cde-4451-8856-e757589be0af",
+			"type": "default",
+			"source": "callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28",
+			"target": "logNode-943c6de8-1cde-4451-8856-e757589be0af",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-ecd5585c-d6b0-476a-af73-8336f92ebd28"
+		},
+		{
+			"id": "logNode-943c6de8-1cde-4451-8856-e757589be0af-finishNode-42ae2c00-219e-469c-8d6d-ba73408e9833",
+			"type": "default",
+			"source": "logNode-943c6de8-1cde-4451-8856-e757589be0af",
+			"target": "finishNode-42ae2c00-219e-469c-8d6d-ba73408e9833",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-943c6de8-1cde-4451-8856-e757589be0af"
+		}
+	],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
+}
